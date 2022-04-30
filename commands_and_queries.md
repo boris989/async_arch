@@ -15,7 +15,7 @@
 |-|-|-|-|-|-|
 | У обычных попугов доступ к аккаунтингу должен быть, Но только к информации о собственных счетах (аудит лог + текущий баланс) | Account (Employee) || Balance, Balance Audit || Employee balance and audit |
 | У админов и бухгалтеров должен быть доступ к общей статистике по деньгами заработанным (количество заработанных топ-менеджментом за сегодня денег + статистика по дням) | Account (Manager, Admin) || Tasks fee, Tasks cost | | Management earned money|
-| Цены на задачу определяется единоразово, в момент появления в системе (можно с минимальной задержкой) | Tasks.Added | Calculate task fee and cost | Task | Accounting.CostAndFeeCalculated ||
+| Цены на задачу определяется единоразово, в момент появления в системе (можно с минимальной задержкой) | Tasks.Added | Calculate task fee and cost | Task | Accounting.TaskCostAndFeeCalculated ||
 | Деньги списываются сразу после ассайна на сотрудника | Tasks.Assigned | Withdraw money | Task cost, Balance | Accounting.MoneyWithdrawn ||
 | Деньги начисляются после выполнения задачи | Tasks.Completed | Accrue money | Task fee, Balance | Accounting.MoneyAccrued | |
 | В конце дня необходимо считать сколько денег сотрудник получил за рабочий день| Accounting.DayEnded | Calculate the employee's earning | Accounts, Balance audit log | Accounting.EmployeeEarningsCalculated ||
