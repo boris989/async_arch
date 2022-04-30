@@ -23,3 +23,10 @@
 | После выплаты баланса (в конце дня) он должен обнуляться |  Accounting.DayEnded | Pay the employee earning | Account, Balance | Accounting.EmployeeEarningPaid ||
 | У счёта должен быть аудитлог того, за что были списаны или начислены деньги, с подробным описанием каждой из задач | Accounting.MoneyWithdrawn/Accounting.MoneyAccrued | Add balance audit log | Account, Balance | Accounting.BalanceAuditChanged||
 | В аудитлоге всех операций аккаунтинга должно быть отображено, что была выплачена сумма | Accounting.EmployeeEarningPaid | Add balance audit log | Account, Balance | Accounting.BalanceAuditChanged||
+
+## Аналитика
+| Требование | Actor | Command  | Data | Event | Query |
+|-|-|-|-|-|-|
+|Нужно указывать сколько заработал топ-менеджмент за сегодня|Admin| | Tasks fee, Tasks cost || Management earned money|
+|Нужно указывать сколько попугов ушло в минус| Admin || Balances||The number of employees who have gone into the negative|
+|Нужно показывать самую дорогую задачу за день, неделю или месяц| Admin||Tasks cost||The most expensive task|
