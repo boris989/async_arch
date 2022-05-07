@@ -363,6 +363,7 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   tzinfo-data
+  waterdrop (~> 1.4)
   web-console
   webdrivers
 

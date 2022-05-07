@@ -14,6 +14,17 @@ module Employee
 
       @task.update(status: :completed)
 
+      # Buisiness event
+      event = {
+        event_name: 'Tasks.TaskCompleted',
+        data: {
+          public_id: @task.public_id,
+          account_public_id: @task.account.public_id
+        }
+      }
+
+      WaterDrop::SyncProducer.call(event.to_json, topic: 'tasks')
+
       redirect_to employee_tasks_path, notice: 'Task successfully completed.'
     end
   end
