@@ -28,6 +28,6 @@ class AccountChangesConsumer < ApplicationConsumer
 
 
   def get_account(public_id)
-    @account ||= Account.find_by(public_id: public_id)
+    Account.find_by(public_id: public_id)
   end
 end

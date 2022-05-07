@@ -1,4 +1,6 @@
 = link_to 'Добавить задачу', new_task_path
+br
+= link_to 'Заассайнить задачи', shuffle_tasks_path, data: { turbo_method: "patch" }
 table.table
   tr
     th #

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
 
-  resources :tasks, only: %i[new create edit update]
+  resources :tasks, only: %i[new create edit update] do
+    patch :shuffle, on: :collection
+  end
 
   namespace :employee do
     resources :tasks, only: %i[index] do

@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update]
 
   def index
-    @tasks = Task.all.includes(:account)
+    @tasks = Task.all.includes(:account).order(id: :desc)
   end
 
   def new
@@ -32,7 +32,13 @@ class TasksController < ApplicationController
   end
 
   def shuffle
-    
+    @open_tasks = Task.open
+
+    @open_tasks.each do |task|
+      task.update(account: employee_accounts.sample)
+    end
+
+    redirect_to root_path, notice: 'Tasks successfully assigned.'
   end
 
   private
