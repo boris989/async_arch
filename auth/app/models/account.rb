@@ -22,6 +22,8 @@ class Account < ApplicationRecord
   }
 
   after_create do
+    reload
+
     event = {
       event_name: 'Auth.AccountCreated',
       data: {

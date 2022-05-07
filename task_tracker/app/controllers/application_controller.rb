@@ -13,5 +13,5 @@ class ApplicationController < ActionController::Base
     current_account.present?
   end
 
-  helper_method :account_signed_in?
+  helper_method :account_signed_in?, :current_account
 end

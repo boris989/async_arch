@@ -2,7 +2,7 @@ class Task < ApplicationRecord
   belongs_to :account
 
   enum status: {
-    in_progress: 'in_progress',
+    open: 'open',
     completed: 'completed'
   }
 

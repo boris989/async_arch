@@ -1,9 +1,13 @@
 class AccountsController < ApplicationController
-  before_action :authenticate_account!
+  before_action :authenticate_account!, except: %i[current]
   before_action :set_account, only: %i[edit update destroy]
 
   def index
     @accounts = Account.all
+  end
+
+  def current
+    render json: current_account
   end
 
   def edit
@@ -55,6 +59,14 @@ class AccountsController < ApplicationController
   end
 
   private
+
+  def current_account
+    if doorkeeper_token
+      Account.find(doorkeeper_token.resource_owner_id)
+    else
+      super
+    end
+  end
 
   def set_account
     @account = Account.find(params[:id])

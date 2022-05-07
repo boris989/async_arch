@@ -24,6 +24,11 @@
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="<%= root_path %>">Все задачи</a>
                 </li>
+                <% if current_account.employee? %>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="<%= employee_tasks_path %>">Мои задачи</a>
+                  </li>
+                <% end %>
               </ul>
             </div>
             <%= link_to 'Выйти', logout_path, class: 'btn btn-default', data: { turbo_method: "delete" } %>

@@ -31,6 +31,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def shuffle
+    
+  end
+
   private
 
   def task_params

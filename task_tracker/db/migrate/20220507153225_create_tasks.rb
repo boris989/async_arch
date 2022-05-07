@@ -1,12 +1,12 @@
 class CreateTasks < ActiveRecord::Migration[7.0]
   def up
     execute <<-SQL
-      CREATE TYPE task_statuses AS ENUM ('in_progress', 'completed');
+      CREATE TYPE task_statuses AS ENUM ('open', 'completed');
     SQL
     create_table :tasks do |t|
       t.references :account, null: false, foreign_key: true
       t.string :description
-      t.column :status, :task_statuses, default: 'in_progress'
+      t.column :status, :task_statuses, default: 'open'
       t.timestamps
     end
   end
