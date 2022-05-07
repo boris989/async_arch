@@ -4,7 +4,7 @@ module Auth
     end
 
     def create
-      @account = Account.find_by(public_id: request.env['omniauth.auth']['public_id'])
+      @account = Account.find_by(public_id: request.env['omniauth.auth']['uid'])
 
       if @account
         session[:account_id] = @account.id
@@ -15,6 +15,8 @@ module Auth
     end
 
     def destroy
+      session[:account_id] = nil
+      redirect_to login_path
     end
   end
 end

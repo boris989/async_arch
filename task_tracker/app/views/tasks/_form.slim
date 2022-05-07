@@ -1,0 +1,16 @@
+= form_with(model: @task, local: true, html: {'data-turbo' => 'false'}) do |f|
+  - if @task.errors.any?
+    #error_explanation
+      h2 #{pluralize(@task.errors.count, "error")} prohibited this task from being saved:
+
+      ul
+        - @task.errors.full_messages.each do |message|
+          li = message
+
+  div
+    = f.label :description
+  div
+    = f.text_area(:description)
+
+  .actions
+    = f.submit

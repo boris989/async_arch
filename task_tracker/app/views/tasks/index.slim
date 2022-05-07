@@ -1,1 +1,15 @@
-h1 Task Index
+= link_to 'Добавить задачу', new_task_path
+table.table
+  tr
+    th #
+    th Описание
+    th Статус
+    th Исполнитель
+    td
+  - @tasks.each do |task|
+    tr
+      td = task.id
+      td = task.description
+      td = task.status
+      td = task.account.full_name
+      td = link_to 'Изменить', edit_task_path(task)
