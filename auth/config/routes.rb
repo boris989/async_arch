@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :accounts
+  root to: "accounts#index"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :accounts, only: %i[index edit update destroy]
 end
