@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_action :authenticate_account!
-  before_action :set_account, only: %i[edit update]
+  before_action :set_account, only: %i[edit update destroy]
 
   def index
     @accounts = Account.all
@@ -41,6 +41,17 @@ class AccountsController < ApplicationController
   end
 
   def destroy
+    @account.update(active: false)
+    event = {
+      event_name: 'Auth.AccountDeleted',
+      data: {
+        public_id: @account.public_id
+      }
+    }
+
+    WaterDrop::SyncProducer.call(event.to_json, topic: 'accounts-stream')
+
+    redirect_to root_path, notice: 'Account was successfully destroyed.'
   end
 
   private

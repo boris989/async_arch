@@ -3,12 +3,14 @@ table.table
     th Имя
     th Email
     th Роль
+    th Активный
     th
   - @accounts.each do |account|
     tr
       td = account.full_name
       td = account.email
       td = account.role
+      td = account.active
       td
         = link_to 'Изменить', edit_account_path(account), class: 'btn btn-small'
         | &nbsp;
