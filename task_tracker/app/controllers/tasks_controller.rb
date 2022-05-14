@@ -38,7 +38,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(add_event.to_json, topic: 'tasks')
+      WaterDrop::SyncProducer.call(add_event.to_json, topic: 'task-lifecycle')
 
       # Buisiness event
       assing_event = {
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'tasks')
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'task-lifecycle')
 
       redirect_to root_path, notice: 'Task successfully added.'
     else
@@ -93,7 +93,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'tasks')
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'task-lifecycle')
     end
 
     redirect_to root_path, notice: 'Tasks successfully assigned.'
