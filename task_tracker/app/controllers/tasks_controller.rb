@@ -18,7 +18,7 @@ class TasksController < ApplicationController
 
       # CUD event
       create_event = {
-        event_name: 'Tasks.TaskCreated',
+        event_name: Events::TASK_CREATED,
         data: {
           public_id: @task.public_id,
           title: @task.title,
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 
       # Buisiness event
       add_event = {
-        event_name: 'Tasks.TaskAdded',
+        event_name: Events::TASK_ADDED,
         data: {
           public_id: @task.public_id,
           title: @task.titile,
@@ -40,18 +40,18 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(add_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
+      WaterDrop::SyncProducer.call(add_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
 
       # Buisiness event
       assing_event = {
-        event_name: 'Tasks.TaskAssigned',
+        event_name: Events::TASK_ASSIGNED,
         data: {
           public_id: @task.public_id,
           performer_public_id: @task.account.public_id
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
 
       redirect_to root_path, notice: 'Task successfully added.'
     else
@@ -66,7 +66,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       # CUD event
       event = {
-        event_name: 'Tasks.TaskUpdated',
+        event_name: Events::TASK_UPDATED,
         data: {
           public_id: @task.public_id,
           title: @task.title,
@@ -89,14 +89,14 @@ class TasksController < ApplicationController
 
       # Buisiness event
       assing_event = {
-        event_name: 'Tasks.TaskAssigned',
+        event_name: Events::TASK_ASSIGNED,
         data: {
           public_id: task.public_id,
           performer_public_id: task.account.public_id
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
     end
 
     redirect_to root_path, notice: 'Tasks successfully assigned.'
