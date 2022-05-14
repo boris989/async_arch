@@ -23,7 +23,7 @@ module Employee
         }
       }
 
-      WaterDrop::SyncProducer.call(event.to_json, topic: 'task-lifecycle')
+      WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
 
       redirect_to employee_tasks_path, notice: 'Task successfully completed.'
     end

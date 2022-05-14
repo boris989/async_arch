@@ -27,7 +27,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(create_event.to_json, topic: 'tasks-stream')
+      WaterDrop::SyncProducer.call(create_event.to_json, topic: KafkaTopics::TASKS_STREAM)
 
       # Buisiness event
       add_event = {
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(add_event.to_json, topic: 'task-lifecycle')
+      WaterDrop::SyncProducer.call(add_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
 
       # Buisiness event
       assing_event = {
@@ -51,7 +51,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'task-lifecycle')
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
 
       redirect_to root_path, notice: 'Task successfully added.'
     else
@@ -74,7 +74,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(event.to_json, topic: 'tasks-stream')
+      WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASKS_STREAM)
       redirect_to root_path, notice: 'Task successfully updated.'
     else
       render :edit
@@ -96,7 +96,7 @@ class TasksController < ApplicationController
         }
       }
 
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: 'task-lifecycle')
+      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFYCYCLE)
     end
 
     redirect_to root_path, notice: 'Tasks successfully assigned.'
