@@ -19,11 +19,11 @@ module Employee
         event_name: 'Tasks.TaskCompleted',
         data: {
           public_id: @task.public_id,
-          account_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id
         }
       }
 
-      WaterDrop::SyncProducer.call(event.to_json, topic: 'tasks')
+      WaterDrop::SyncProducer.call(event.to_json, topic: 'task-lifecycle')
 
       redirect_to employee_tasks_path, notice: 'Task successfully completed.'
     end

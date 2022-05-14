@@ -21,6 +21,7 @@ class TasksController < ApplicationController
         event_name: 'Tasks.TaskCreated',
         data: {
           public_id: @task.public_id,
+          title: @task.title,
           description: @task.description,
           performer_public_id: @task.account.public_id
         }
@@ -33,6 +34,7 @@ class TasksController < ApplicationController
         event_name: 'Tasks.TaskAdded',
         data: {
           public_id: @task.public_id,
+          title: @task.titile,
           description: @task.description,
           performer_public_id: @task.account.public_id
         }
@@ -67,6 +69,7 @@ class TasksController < ApplicationController
         event_name: 'Tasks.TaskUpdated',
         data: {
           public_id: @task.public_id,
+          title: @task.title,
           description: @task.description
         }
       }
@@ -102,7 +105,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:description)
+    params.require(:task).permit(:title, :description)
   end
 
   def employee_accounts
