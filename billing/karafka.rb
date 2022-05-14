@@ -17,7 +17,7 @@ end
 class KarafkaApp < Karafka::App
   setup do |config|
     config.kafka.seed_brokers = %w[kafka://127.0.0.1:9092]
-    config.client_id = 'task_tracker_service'
+    config.client_id = 'billing_service'
     config.logger = Rails.logger
   end
 
@@ -41,11 +41,11 @@ class KarafkaApp < Karafka::App
   # )
 
   consumer_groups.draw do
-    topic KafkaTopics::ACCOUNTS_STREAM do
+    topic :'accounts-stream' do
       consumer AccountChangesConsumer
     end
 
-    topic KafkaTopics::ACCOUNTS do
+    topic :'accounts' do
       consumer AccountChangesConsumer
     end
   end

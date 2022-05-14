@@ -31,6 +31,7 @@
                 <% end %>
               </ul>
             </div>
+            <span><%= current_account.email %></span>
             <%= link_to 'Выйти', logout_path, class: 'btn btn-default', data: { turbo_method: "delete" } %>
           </div>
         </nav>

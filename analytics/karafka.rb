@@ -17,7 +17,7 @@ end
 class KarafkaApp < Karafka::App
   setup do |config|
     config.kafka.seed_brokers = %w[kafka://127.0.0.1:9092]
-    config.client_id = 'task_tracker_service'
+    config.client_id = 'analytics_service'
     config.logger = Rails.logger
   end
 
