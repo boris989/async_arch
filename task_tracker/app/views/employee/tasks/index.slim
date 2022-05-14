@@ -1,0 +1,14 @@
+table.table
+  tr
+    th #
+    th Описание
+    th Статус
+    td
+  - @tasks.each do |task|
+    tr
+      td = task.id
+      td = task.description
+      td = task.status
+      td
+        - if task.open?
+          = link_to 'Завершить', complete_employee_task_path(task),  data: { turbo_method: "patch" }

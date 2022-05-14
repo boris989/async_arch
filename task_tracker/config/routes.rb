@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root to: 'tasks#index'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :tasks, only: %i[new create edit update] do
+    patch :shuffle, on: :collection
+  end
+
+  namespace :employee do
+    resources :tasks, only: %i[index] do
+      patch :complete, on: :member
+    end
+  end
+
+  get '/login' => 'auth/oauth_sessions#new'
+  get '/auth/:provider/callback' => 'auth/oauth_sessions#create'
+  delete '/logout' => 'auth/oauth_sessions#destroy'
 end

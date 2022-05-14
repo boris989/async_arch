@@ -1,0 +1,17 @@
+= link_to 'Добавить задачу', new_task_path
+br
+= link_to 'Заассайнить задачи', shuffle_tasks_path, data: { turbo_method: "patch" }
+table.table
+  tr
+    th #
+    th Описание
+    th Статус
+    th Исполнитель
+    td
+  - @tasks.each do |task|
+    tr
+      td = task.id
+      td = task.description
+      td = task.status
+      td = task.account.full_name
+      td = link_to 'Изменить', edit_task_path(task)
