@@ -22,6 +22,7 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           title: @task.title,
+          jira_id: @task.jira_id,
           description: @task.description,
           performer_public_id: @task.account.public_id
         }
@@ -34,7 +35,8 @@ class TasksController < ApplicationController
         event_name: Events::TASK_ADDED,
         data: {
           public_id: @task.public_id,
-          title: @task.titile,
+          title: @task.title,
+          jira_id: @task.jira_id,
           description: @task.description,
           performer_public_id: @task.account.public_id
         }
@@ -70,6 +72,7 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           title: @task.title,
+          jira_id: @task.jira_id,
           description: @task.description
         }
       }
