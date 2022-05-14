@@ -16,7 +16,7 @@ module Employee
 
       # Buisiness event
       event = {
-        event_name: 'Tasks.TaskCompleted',
+        event_name: Events::TASK_COMPLETED,
         data: {
           public_id: @task.public_id,
           performer_public_id: @task.account.public_id
