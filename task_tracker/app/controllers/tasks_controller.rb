@@ -22,7 +22,7 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           description: @task.description,
-          account_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id
         }
       }
 
@@ -34,7 +34,7 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           description: @task.description,
-          account_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id
         }
       }
 
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
         event_name: 'Tasks.TaskAssigned',
         data: {
           public_id: @task.public_id,
-          account_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id
         }
       }
 
@@ -89,7 +89,7 @@ class TasksController < ApplicationController
         event_name: 'Tasks.TaskAssigned',
         data: {
           public_id: task.public_id,
-          account_public_id: task.account.public_id
+          performer_public_id: task.account.public_id
         }
       }
 
