@@ -3,5 +3,5 @@ class KafkaTopics
   ACCOUNTS = 'accounts'
 
   TASKS_STREAM = 'tasks-stream'
-  TASK_LIFYCYCLE = 'task-lifecycle'
+  TASK_LIFECYCLE = 'task-lifecycle'
 end
