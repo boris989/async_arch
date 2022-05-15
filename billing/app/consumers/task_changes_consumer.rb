@@ -28,8 +28,6 @@ class TaskChangesConsumer < ApplicationConsumer
 
         task.save!
       when Events::TASK_UPDATED
-        p '-----------------------------------------------'
-        p  data[:performer_public_id]
         task = get_task(data[:public_id])
         account = Account.find_by(public_id: data[:performer_public_id])
 
@@ -49,6 +47,6 @@ class TaskChangesConsumer < ApplicationConsumer
 
 
   def get_task(public_id)
-    Task.find_or_initialize_by(public_id: public_id)
+    Task.find_or_create_by(public_id: public_id)
   end
 end

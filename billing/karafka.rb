@@ -52,6 +52,10 @@ class KarafkaApp < Karafka::App
     topic KafkaTopics::TASKS_STREAM do
       consumer TaskChangesConsumer
     end
+
+    topic KafkaTopics::TASK_LIFECYCLE do
+      consumer TaskLifecycleConsumer
+    end
   end
 end
 
