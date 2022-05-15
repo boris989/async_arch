@@ -1,0 +1,25 @@
+h4
+  | Current balance: #{current_account.balance.amount}
+
+h4 Transaction log:
+
+table.table
+  tr
+    th
+      | Created at
+    th
+      | Type
+    th
+      | Amount
+    th
+      | Description
+  - @transactions.each do |transaction|
+    tr
+      td = transaction.created_at
+      td = transaction.kind
+      td
+        - unless transaction.enrollment?
+          | -
+        = transaction.amount
+      td
+        = transaction.description

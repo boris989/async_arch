@@ -9,24 +9,20 @@ class TaskChangesConsumer < ApplicationConsumer
 
       case message.payload['event_name']
       when Events::TASK_CREATED
-        task = get_task(data[:public_id])
         account = Account.find_by(public_id: data[:performer_public_id])
+        account.with_lock do
+          task = get_task(data[:public_id])
+          task.assign_attributes(
+            public_id: data[:public_id],
+            title: data[:title],
+            jira_id: data[:jira_id],
+            description: data[:description],
+            account: account,
+            status: data[:status]
+          )
 
-        cost = rand(10..20)
-        fee = rand(20..40)
-
-        task.assign_attributes(
-          public_id: data[:public_id],
-          title: data[:title],
-          jira_id: data[:jira_id],
-          description: data[:description],
-          account: account,
-          cost: cost,
-          fee: fee,
-          status: data[:status]
-        )
-
-        task.save!
+          task.save!
+        end
       when Events::TASK_UPDATED
         task = get_task(data[:public_id])
         account = Account.find_by(public_id: data[:performer_public_id])

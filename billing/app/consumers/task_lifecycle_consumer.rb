@@ -9,19 +9,27 @@ class TaskLifecycleConsumer < ApplicationConsumer
 
       case message.payload['event_name']
       when Events::TASK_ASSIGNED
-        task = get_task(data[:public_id])
         account = get_account(data[:performer_public_id])
+        acoount.with_lock do
+          task = get_task(data[:public_id])
+          task.account = account
+          task.save!
 
-        task.account = account
-        task.save!
-
-        account.transactions.withdrawal.create!(amount: task.cost, description: task.description)
-
+          account.transactions.withdrawal.create!(
+            amount: task.amount,
+            description: task.description,
+            billing_cycle: BillingCycle.current
+          )
+        end
       when Events::TASK_COMPLETED
         task = get_task(data[:public_id])
         account = get_account(data[:performer_public_id])
         task.update!(status: 'completed')
-        account.transactions.enrollment.create!(amount: task.fee, description: task.description)
+        account.transactions.enrollment.create!(
+          amount: task.fee,
+          description: task.description,
+          billing_cycle: BillingCycle.current
+        )
       end
     end
   end

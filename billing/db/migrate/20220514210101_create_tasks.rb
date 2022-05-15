@@ -7,7 +7,7 @@ class CreateTasks < ActiveRecord::Migration[7.0]
       t.string :jira_id
       t.string :description
       t.string :status
-      t.decimal :cost, precision: 4, scale: 2
+      t.decimal :amount, precision: 4, scale: 2
       t.decimal :fee, precision: 4, scale: 2
 
       t.timestamps

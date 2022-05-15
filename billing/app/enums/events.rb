@@ -6,6 +6,7 @@ class Events
   TASK_UPDATED = 'Tasks.TaskUpdated'
 
   ACCOUNT_ROLE_CHANGED = 'Auth.AccountRoleChanged'
+  EMPLOYEE_PAYMENT_MADE = 'Billing.EmployeePaymentMade'
   TASK_COMPLETED = 'Tasks.TaskCompleted'
   TASK_ASSIGNED = 'Tasks.TaskAssigned'
 end

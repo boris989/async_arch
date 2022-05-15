@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'dashboard#index'
 
+  patch '/close_billing_cycle_and_open_new' => 'dashboard#close_billing_cycle_and_open_new'
+
   namespace :employee do
     get '/dashboard' => 'dashboard#index'
   end

@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :account
+  belongs_to :billing_cycle
 
   enum kind: {
     enrollment: 'enrollment',
@@ -10,7 +11,7 @@ class Transaction < ApplicationRecord
   after_create do
     balance = account.balance
 
-    if kind == 'enrollment'
+    if enrollment?
       balance.amount += amount
     else
       balance.amount -= amount

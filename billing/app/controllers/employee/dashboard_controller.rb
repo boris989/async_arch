@@ -4,6 +4,7 @@ module Employee
     before_action :authorize!
 
     def index
+      @transactions = current_account.transactions.order(id: :desc)
     end
 
     private
