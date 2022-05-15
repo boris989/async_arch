@@ -77,7 +77,8 @@ class TasksController < ApplicationController
           jira_id: @task.jira_id,
           description: @task.description,
           performer_public_id: @task.account.public_id,
-          status: @task.status
+          status: @task.status,
+          completed_at: @task.completed_at
         }
       }
 

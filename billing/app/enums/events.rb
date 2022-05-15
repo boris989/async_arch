@@ -4,6 +4,7 @@ class Events
   ACCOUNT_DELETED = 'Auth.AccountDeleted'
   TASK_CREATED = 'Tasks.TaskCreated'
   TASK_UPDATED = 'Tasks.TaskUpdated'
+  TASK_COSTS_CREATED = 'Billing.TaskCostsCreated'
 
   ACCOUNT_ROLE_CHANGED = 'Auth.AccountRoleChanged'
   EMPLOYEE_PAYMENT_MADE = 'Billing.EmployeePaymentMade'

@@ -22,17 +22,6 @@ class TaskChangesConsumer < ApplicationConsumer
           )
 
           task.save!
-
-          event = {
-            event_name: Events::TASK_COSTS_CREATED,
-            data: {
-              task_public_id: task.public_id,
-              amount: task.amount,
-              fee: task.fee
-            }
-          }
-
-          WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASK_COSTS_STREAM)
         end
       when Events::TASK_UPDATED
         task = get_task(data[:public_id])
@@ -44,7 +33,8 @@ class TaskChangesConsumer < ApplicationConsumer
           jira_id: data[:jira_id],
           description: data[:description],
           account: account,
-          status: data[:status]
+          status: data[:status],
+          completed_at: data[:completed_at]
         )
 
         task.save!

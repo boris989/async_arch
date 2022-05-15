@@ -12,7 +12,7 @@ module Employee
       return head 403 if @task.account != current_account
       return head 400 if @task.completed?
 
-      @task.update(status: :completed)
+      @task.update(status: :completed, completed_at: Time.current)
 
       # Buisiness event
       event = {
@@ -24,6 +24,22 @@ module Employee
       }
 
       WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
+
+      # CUD event
+      event = {
+        event_name: Events::TASK_UPDATED,
+        data: {
+          public_id: @task.public_id,
+          title: @task.title,
+          jira_id: @task.jira_id,
+          description: @task.description,
+          performer_public_id: @task.account.public_id,
+          status: @task.status,
+          completed_at: @task.completed_at
+        }
+      }
+
+      WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASKS_STREAM)
 
       redirect_to employee_tasks_path, notice: 'Task successfully completed.'
     end
