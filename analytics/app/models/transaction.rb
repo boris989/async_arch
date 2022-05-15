@@ -7,6 +7,8 @@ class Transaction < ApplicationRecord
     payment: 'payment'
   }
 
+  scope :today, -> { where(created_at:  DateTime.current.beginning_of_day..Time.current)}
+
   after_create do
     balance = account.balance
 
