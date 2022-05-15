@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_15_132019) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_15_140646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_15_132019) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "balances", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.decimal "amount", default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_balances_on_account_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -38,5 +46,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_15_132019) do
     t.index ["account_id"], name: "index_tasks_on_account_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.uuid "public_id"
+    t.decimal "amount"
+    t.string "kind"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+  end
+
+  add_foreign_key "balances", "accounts"
   add_foreign_key "tasks", "accounts"
+  add_foreign_key "transactions", "accounts"
 end

@@ -56,6 +56,10 @@ class KarafkaApp < Karafka::App
     topic KafkaTopics::TASK_COSTS_STREAM do
       consumer TaskCostsChangesConsumer
     end
+
+    topic KafkaTopics::TRANSACTIONS_STREAM do
+      consumer TransactionChangesConsumer
+    end
   end
 end
 

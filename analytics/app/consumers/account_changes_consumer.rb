@@ -9,12 +9,14 @@ class AccountChangesConsumer < ApplicationConsumer
 
       case message.payload['event_name']
       when Events::ACCOUNT_CREATED
-        Account.create!(
+        account = Account.create!(
           public_id: data[:public_id],
           email: data[:email],
           full_name: data[:full_name],
           role: data[:role]
         )
+
+        Balance.create!(account: account)
       when Events::ACCOUNT_UPDATED
         account = get_account(data[:public_id])
         account.update(full_name: data[:full_name])

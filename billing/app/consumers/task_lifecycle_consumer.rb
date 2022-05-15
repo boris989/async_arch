@@ -10,7 +10,7 @@ class TaskLifecycleConsumer < ApplicationConsumer
       case message.payload['event_name']
       when Events::TASK_ASSIGNED
         account = get_account(data[:performer_public_id])
-        acoount.with_lock do
+        account.with_lock do
           task = get_task(data[:public_id])
           task.account = account
           task.save!

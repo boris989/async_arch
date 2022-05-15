@@ -18,5 +18,20 @@ class Transaction < ApplicationRecord
     end
 
     balance.save!
+
+    self.reload
+
+    event = {
+      event_name: Events::TRANSACTION_CREATED,
+      data: {
+        public_id: public_id,
+        owner_public_id: account.public_id,
+        amount: amount,
+        description: description,
+        kind: kind
+      }
+    }
+
+    WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TRANSACTIONS_STREAM)
   end
 end
