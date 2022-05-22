@@ -7,5 +7,7 @@ class Events
   TASK_COSTS_CREATED = 'Billing.TaskCostsCreated'
 
   ACCOUNT_ROLE_CHANGED = 'Auth.AccountRoleChanged'
+  TASK_ASSIGNED = 'Tasks.TaskAssigned'
+  TASK_COMPLETED = 'Tasks.TaskCompleted'
   TRANSACTION_APPLIED = 'Billing.TransactionApplied'
 end

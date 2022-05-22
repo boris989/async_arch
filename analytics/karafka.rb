@@ -57,6 +57,10 @@ class KarafkaApp < Karafka::App
       consumer TaskCostsChangesConsumer
     end
 
+    topic KafkaTopics::TASK_LIFECYCLE do
+      consumer TaskLifecycleConsumer
+    end
+
     topic KafkaTopics::TRANSACTIONS_APPLIED do
       consumer TransactionAppliedConsumer
     end

@@ -49,16 +49,17 @@ class TasksController < ApplicationController
       )
 
       # Buisiness event
-      assing_event = {
+      ProduceEvent.call(
         event_name: Events::TASK_ASSIGNED,
+        event_version: 1,
+        schema: 'task_tracker.task_assigned',
+        topic: KafkaTopics::TASK_LIFECYCLE,
         data: {
           public_id: @task.public_id,
           performer_public_id: @task.account.public_id,
           description: @task.description
         }
-      }
-
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
+      )
 
       redirect_to root_path, notice: 'Task successfully added.'
     else
@@ -100,15 +101,17 @@ class TasksController < ApplicationController
       task.update(account: employee_accounts.sample)
 
       # Buisiness event
-      assing_event = {
+      ProduceEvent.call(
         event_name: Events::TASK_ASSIGNED,
+        event_version: 1,
+        schema: 'task_tracker.task_assigned',
+        topic: KafkaTopics::TASK_LIFECYCLE,
         data: {
           public_id: task.public_id,
-          performer_public_id: task.account.public_id
+          performer_public_id: task.account.public_id,
+          description: task.description
         }
-      }
-
-      WaterDrop::SyncProducer.call(assing_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
+      )
     end
 
     redirect_to root_path, notice: 'Tasks successfully assigned.'
