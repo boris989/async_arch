@@ -7,8 +7,8 @@ class TaskChangesConsumer < ApplicationConsumer
 
       data = HashWithIndifferentAccess.new(message.payload['data'])
 
-      case message.payload['event_name']
-      when Events::TASK_CREATED
+      case [message.payload['event_name'], message.payload['event_version']]
+      when [Events::TASK_CREATED, 1]
         account = Account.find_by(public_id: data[:performer_public_id])
         account.with_lock do
           task = get_task(data[:public_id])

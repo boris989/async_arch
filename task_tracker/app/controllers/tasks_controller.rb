@@ -17,8 +17,11 @@ class TasksController < ApplicationController
       @task.reload
 
       # CUD event
-      create_event = {
+      ProduceEvent.call(
         event_name: Events::TASK_CREATED,
+        event_version: 1,
+        schema: 'task_tracker.task_created',
+        topic: KafkaTopics::TASKS_STREAM,
         data: {
           public_id: @task.public_id,
           title: @task.title,
@@ -27,9 +30,7 @@ class TasksController < ApplicationController
           performer_public_id: @task.account.public_id,
           status: @task.status
         }
-      }
-
-      WaterDrop::SyncProducer.call(create_event.to_json, topic: KafkaTopics::TASKS_STREAM)
+      )
 
       # Buisiness event
       add_event = {
