@@ -23,7 +23,7 @@ class TaskChangesConsumer < ApplicationConsumer
 
           task.save!
         end
-      when Events::TASK_UPDATED
+      when [Events::TASK_UPDATED, 1]
         task = get_task(data[:public_id])
         account = Account.find_by(public_id: data[:performer_public_id])
 

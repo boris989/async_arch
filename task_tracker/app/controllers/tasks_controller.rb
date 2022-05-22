@@ -71,8 +71,11 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       # CUD event
-      event = {
+      ProduceEvent.call(
         event_name: Events::TASK_UPDATED,
+        event_version: 1,
+        schema: 'task_tracker.task_updated',
+        topic: KafkaTopics::TASKS_STREAM,
         data: {
           public_id: @task.public_id,
           title: @task.title,
@@ -82,9 +85,7 @@ class TasksController < ApplicationController
           status: @task.status,
           completed_at: @task.completed_at
         }
-      }
-
-      WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASKS_STREAM)
+      )
       redirect_to root_path, notice: 'Task successfully updated.'
     else
       render :edit

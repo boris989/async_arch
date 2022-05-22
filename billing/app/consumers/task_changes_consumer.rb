@@ -34,7 +34,7 @@ class TaskChangesConsumer < ApplicationConsumer
 
           WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TASK_COSTS_STREAM)
         end
-      when Events::TASK_UPDATED
+      when [Events::TASK_UPDATED, 1]
         task = get_task(data[:public_id])
         account = Account.find_by(public_id: data[:performer_public_id])
 
