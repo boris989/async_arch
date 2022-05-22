@@ -24,16 +24,17 @@ class Account < ApplicationRecord
   after_create do
     reload
 
-    event = {
-      event_name: 'Auth.AccountCreated',
+    ProduceEvent.call(
+      event_name: Events::ACCOUNT_CREATED,
+      event_version: 1,
+      schema: 'auth.account_created',
+      topic: KafkaTopics::ACCOUNTS_STREAM,
       data: {
         public_id: public_id,
         full_name: full_name,
         email: email,
         role: role
       }
-    }
-
-    WaterDrop::SyncProducer.call(event.to_json, topic: 'accounts-stream')
+    )
   end
 end
