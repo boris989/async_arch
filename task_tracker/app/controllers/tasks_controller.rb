@@ -51,7 +51,8 @@ class TasksController < ApplicationController
         event_name: Events::TASK_ASSIGNED,
         data: {
           public_id: @task.public_id,
-          performer_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id,
+          description: @task.description
         }
       }
 

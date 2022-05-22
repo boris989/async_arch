@@ -19,7 +19,7 @@ class Transaction < ApplicationRecord
     self.reload
 
     event = {
-      event_name: Events::TRANSACTION_CREATED,
+      event_name: Events::TRANSACTION_APPLIED,
       data: {
         public_id: public_id,
         owner_public_id: account.public_id,
@@ -30,6 +30,6 @@ class Transaction < ApplicationRecord
       }
     }
 
-    WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TRANSACTIONS_STREAM)
+    WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TRANSACTIONS_APPLIED)
   end
 end
