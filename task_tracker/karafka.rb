@@ -41,11 +41,11 @@ class KarafkaApp < Karafka::App
   # )
 
   consumer_groups.draw do
-    topic :'accounts-stream' do
+    topic KafkaTopics::ACCOUNTS_STREAM do
       consumer AccountChangesConsumer
     end
 
-    topic :'accounts' do
+    topic KafkaTopics::ACCOUNTS do
       consumer AccountChangesConsumer
     end
   end

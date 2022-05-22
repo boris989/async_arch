@@ -22,8 +22,10 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           title: @task.title,
+          jira_id: @task.jira_id,
           description: @task.description,
-          performer_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id,
+          status: @task.status
         }
       }
 
@@ -34,9 +36,11 @@ class TasksController < ApplicationController
         event_name: Events::TASK_ADDED,
         data: {
           public_id: @task.public_id,
-          title: @task.titile,
+          title: @task.title,
+          jira_id: @task.jira_id,
           description: @task.description,
-          performer_public_id: @task.account.public_id
+          performer_public_id: @task.account.public_id,
+          status: @task.status
         }
       }
 
@@ -70,7 +74,11 @@ class TasksController < ApplicationController
         data: {
           public_id: @task.public_id,
           title: @task.title,
-          description: @task.description
+          jira_id: @task.jira_id,
+          description: @task.description,
+          performer_public_id: @task.account.public_id,
+          status: @task.status,
+          completed_at: @task.completed_at
         }
       }
 
@@ -105,7 +113,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :jira_id)
   end
 
   def employee_accounts

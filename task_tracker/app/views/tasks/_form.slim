@@ -6,6 +6,15 @@
       ul
         - @task.errors.full_messages.each do |message|
           li = message
+  div
+    = f.label :title
+  div
+    = f.text_field(:title)
+
+  div
+    = f.label :jira_id
+  div
+    = f.text_field(:jira_id)
 
   div
     = f.label :description

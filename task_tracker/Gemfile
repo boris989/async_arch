@@ -47,6 +47,7 @@ gem 'omniauth-oauth2'
 gem "omniauth-rails_csrf_protection"
 
 # kafka
+gem 'schema_registry', path: '../event_schema_registry/ruby/'
 gem 'karafka'
 gem 'waterdrop', '~> 1.4'
 
