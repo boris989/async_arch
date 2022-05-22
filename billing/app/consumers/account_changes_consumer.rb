@@ -21,7 +21,7 @@ class AccountChangesConsumer < ApplicationConsumer
         account = get_account(data[:public_id])
         account.update(full_name: data[:full_name])
       when [Events::ACCOUNT_DELETED, 1]
-      when Events::ACCOUNT_ROLE_CHANGED
+      when [Events::ACCOUNT_ROLE_CHANGED, 1]
         account = get_account(data[:public_id])
         account.update(role: data[:role])
       end

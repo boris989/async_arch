@@ -30,14 +30,16 @@ class AccountsController < ApplicationController
       )
 
       if new_role
-        event = {
-          event_name: 'Auth.AccountRoleChanged',
+        ProduceEvent.call(
+          event_name: Events::ACCOUNT_ROLE_CHANGED,
+          event_version: 1,
+          schema: 'auth.account_role_changed',
+          topic: KafkaTopics::ACCOUNTS,
           data: {
             public_id: @account.public_id,
             role: @account.role
           }
-        }
-        WaterDrop::SyncProducer.call(event.to_json, topic: 'accounts')
+        )
       end
       redirect_to root_path, notice: 'Account was successfully updated.'
     else
