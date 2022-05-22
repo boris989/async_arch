@@ -22,7 +22,7 @@ class TaskLifecycleConsumer < ApplicationConsumer
             billing_cycle: BillingCycle.current
           )
         end
-      when Events::TASK_COMPLETED
+      when [Events::TASK_COMPLETED, 1]
         task = get_task(data[:public_id], data[:description])
         account = get_account(data[:performer_public_id])
         task.update!(status: 'completed')

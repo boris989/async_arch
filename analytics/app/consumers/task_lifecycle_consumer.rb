@@ -15,10 +15,9 @@ class TaskLifecycleConsumer < ApplicationConsumer
           task.account = account
           task.save!
         end
-      when Events::TASK_COMPLETED
-        task = get_task(data[:public_id], data[:description])
-        account = get_account(data[:performer_public_id])
-        task.update!(status: 'completed')
+      when [Events::TASK_COMPLETED, 1]
+        task = get_task(data[:public_id])
+        task.update!(status: 'completed', completed_at: data[:completed_at])
       end
     end
   end
