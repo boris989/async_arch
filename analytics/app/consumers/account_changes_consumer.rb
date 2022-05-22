@@ -7,8 +7,8 @@ class AccountChangesConsumer < ApplicationConsumer
 
       data = HashWithIndifferentAccess.new(message.payload['data'])
 
-      case message.payload['event_name']
-      when Events::ACCOUNT_CREATED
+      case [message.payload['event_name'], message.payload['event_version']]
+      when [Events::ACCOUNT_CREATED, 1]
         account = Account.create!(
           public_id: data[:public_id],
           email: data[:email],
@@ -17,11 +17,11 @@ class AccountChangesConsumer < ApplicationConsumer
         )
 
         Balance.create!(account: account)
-      when Events::ACCOUNT_UPDATED
+      when [Events::ACCOUNT_UPDATED, 1]
         account = get_account(data[:public_id])
         account.update(full_name: data[:full_name])
-      when Events::ACCOUNT_DELETED
-      when Events::ACCOUNT_ROLE_CHANGED
+      when [Events::ACCOUNT_DELETED, 1]
+      when [Events::ACCOUNT_ROLE_CHANGED, 1]
         account = get_account(data[:public_id])
         account.update(role: data[:role])
       end

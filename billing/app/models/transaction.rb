@@ -18,8 +18,11 @@ class Transaction < ApplicationRecord
 
     self.reload
 
-    event = {
+    ProduceEvent.call(
       event_name: Events::TRANSACTION_APPLIED,
+      event_version: 1,
+      schema: 'billing.transaction_applied',
+      topic: KafkaTopics::TRANSACTIONS_APPLIED,
       data: {
         public_id: public_id,
         owner_public_id: account.public_id,
@@ -28,8 +31,6 @@ class Transaction < ApplicationRecord
         description: description,
         kind: kind
       }
-    }
-
-    WaterDrop::SyncProducer.call(event.to_json, topic: KafkaTopics::TRANSACTIONS_APPLIED)
+    )
   end
 end
