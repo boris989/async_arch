@@ -6,9 +6,15 @@ class TaskLifecycleConsumer < ApplicationConsumer
       puts '-' * 80
 
       data = HashWithIndifferentAccess.new(message.payload['data'])
-
-      case [message.payload['event_name'], message.payload['event_version']]
+      event = Event.new(
+        event_name: message.payload['event_name'],
+        event_version: message.payload['event_version'],
+        data: data
+      )
+      case [event.event_name, event.event_version]
       when [Events::TASK_ASSIGNED, 1]
+        ValidateEvent.call(event: event, schema: 'task_tracker.task_assigned')
+
         account = get_account(data[:performer_public_id])
         account.with_lock do
           task = get_task(data[:public_id], data[:description])
@@ -23,6 +29,8 @@ class TaskLifecycleConsumer < ApplicationConsumer
           )
         end
       when [Events::TASK_COMPLETED, 1]
+        ValidateEvent.call(event: event, schema: 'task_tracker.task_completed')
+
         task = get_task(data[:public_id], data[:description])
         account = get_account(data[:performer_public_id])
         task.update!(status: 'completed')

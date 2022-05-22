@@ -7,8 +7,8 @@ class TransactionAppliedConsumer < ApplicationConsumer
 
       data = HashWithIndifferentAccess.new(message.payload['data'])
 
-      case message.payload['event_name']
-      when Events::TRANSACTION_APPLIED
+      case [message.payload['event_name'], message.payload['event_version']]
+      when [Events::TRANSACTION_APPLIED, 1]
         account = Account.find_by(public_id: data[:owner_public_id])
 
         Transaction.create!(
