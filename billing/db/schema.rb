@@ -59,7 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_15_100500) do
   create_table "transactions", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
-    t.decimal "amount"
+    t.decimal "debit", default: "0.0"
+    t.decimal "credit", default: "0.0"
     t.enum "kind", null: false, enum_type: "transaction_kinds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

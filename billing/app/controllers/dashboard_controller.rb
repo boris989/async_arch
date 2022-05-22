@@ -3,8 +3,8 @@ class DashboardController < ApplicationController
   before_action :authorize!
 
   def index
-    @withdrawal_amount = BillingCycle.current.transactions.withdrawal.sum(:amount)
-    @enrollment_amount = BillingCycle.current.transactions.enrollment.sum(:amount)
+    @withdrawal_amount = BillingCycle.current.transactions.withdrawal.sum(:credit)
+    @enrollment_amount = BillingCycle.current.transactions.enrollment.sum(:debit)
 
     @top_managers_income =  -(@withdrawal_amount + @enrollment_amount)
   end
@@ -16,7 +16,8 @@ class DashboardController < ApplicationController
         next if account.balance.amount <= 0
 
         @payment_transactions << account.transactions.payment.create!(
-          amount: account.balance.amount,
+          credit: account.balance.amount,
+          debit: 0,
           billing_cycle: BillingCycle.current
         )
       end
@@ -33,7 +34,8 @@ class DashboardController < ApplicationController
         event_name: Events::EMPLOYEE_PAYMENT_MADE,
         data: {
           employee_public_id: transaction.account.public_id,
-          amount: transaction.amount,
+          debit: transaction.debit,
+          credit: transaction.credit,
           payment_at: transaction.created_at
         }
       }

@@ -5,7 +5,7 @@ module Auth
 
     def create
       @account = Account.find_by(public_id: request.env['omniauth.auth']['uid'])
-      return redirect_to login_path unless @account.admin? || @account.accountant? || @account.employee?
+      return redirect_to login_path unless @account&.admin? || @account&.accountant? || @account&.employee?
 
       if @account
         session[:account_id] = @account.id

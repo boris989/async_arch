@@ -11,11 +11,8 @@ class Transaction < ApplicationRecord
   after_create do
     balance = account.balance
 
-    if enrollment?
-      balance.amount += amount
-    else
-      balance.amount -= amount
-    end
+    balance.amount += debit
+    balance.amount -= credit
 
     balance.save!
 
@@ -26,7 +23,8 @@ class Transaction < ApplicationRecord
       data: {
         public_id: public_id,
         owner_public_id: account.public_id,
-        amount: amount,
+        debit: debit,
+        credit: credit,
         description: description,
         kind: kind
       }

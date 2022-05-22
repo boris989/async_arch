@@ -12,11 +12,8 @@ class Transaction < ApplicationRecord
   after_create do
     balance = account.balance
 
-    if enrollment?
-      balance.amount += amount
-    else
-      balance.amount -= amount
-    end
+    balance.amount += debit
+    balance.amount -= credit
 
     balance.save!
   end

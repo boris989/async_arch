@@ -2,8 +2,8 @@ class DashboardController < ApplicationController
   before_action :authenticate_account!
 
   def index
-    withdrawal_amount = Transaction.today.withdrawal.sum(:amount)
-    enrollment_amount = Transaction.today.enrollment.sum(:amount)
+    withdrawal_amount = Transaction.today.withdrawal.sum(:credit)
+    enrollment_amount = Transaction.today.enrollment.sum(:debit)
 
     @top_managers_income =  -(withdrawal_amount + enrollment_amount)
     @parrots_with_negative_balance = Account.employee.joins(:balance).where('balances.amount < 0').count

@@ -16,7 +16,8 @@ class TaskLifecycleConsumer < ApplicationConsumer
           task.save!
 
           account.transactions.withdrawal.create!(
-            amount: task.amount,
+            credit: task.amount,
+            debit: 0,
             description: task.description,
             billing_cycle: BillingCycle.current
           )
@@ -26,7 +27,8 @@ class TaskLifecycleConsumer < ApplicationConsumer
         account = get_account(data[:performer_public_id])
         task.update!(status: 'completed')
         account.transactions.enrollment.create!(
-          amount: task.fee,
+          debit: task.fee,
+          credit: 0,
           description: task.description,
           billing_cycle: BillingCycle.current
         )

@@ -14,4 +14,8 @@ table.table
       td = task.description
       td = task.status
       td = task.account.full_name
-      td = link_to 'Изменить', edit_task_path(task)
+      td
+        - if task.open?
+          = link_to 'Завершить', complete_employee_task_path(task),  data: { turbo_method: "patch" }
+        '
+        = link_to 'Изменить', edit_task_path(task)

@@ -49,7 +49,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_15_140646) do
   create_table "transactions", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.uuid "public_id"
-    t.decimal "amount"
+    t.decimal "debit", default: "0.0"
+    t.decimal "credit", default: "0.0"
     t.string "kind"
     t.string "description"
     t.datetime "created_at", null: false

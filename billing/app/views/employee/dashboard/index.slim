@@ -10,7 +10,9 @@ table.table
     th
       | Type
     th
-      | Amount
+      | Debit
+    th
+      | Credit
     th
       | Description
   - @transactions.each do |transaction|
@@ -18,8 +20,8 @@ table.table
       td = transaction.created_at
       td = transaction.kind
       td
-        - unless transaction.enrollment?
-          | -
-        = transaction.amount
+        = transaction.debit
+      td
+        = transaction.credit
       td
         = transaction.description

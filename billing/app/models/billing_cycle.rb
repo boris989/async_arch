@@ -1,5 +1,5 @@
 class BillingCycle < ApplicationRecord
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
 
   enum status: {
     open: 'open',

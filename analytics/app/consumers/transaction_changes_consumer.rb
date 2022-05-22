@@ -13,7 +13,8 @@ class TransactionChangesConsumer < ApplicationConsumer
 
         Transaction.create!(
           public_id: data[:public_id],
-          amount: data[:amount],
+          debit: data[:debit],
+          credit: data[:credit],
           kind: data[:kind],
           account: account,
           description: data[:description]
