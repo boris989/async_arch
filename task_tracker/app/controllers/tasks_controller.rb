@@ -33,8 +33,11 @@ class TasksController < ApplicationController
       )
 
       # Buisiness event
-      add_event = {
+      ProduceEvent.call(
         event_name: Events::TASK_ADDED,
+        event_version: 1,
+        schema: 'task_tracker.task_added',
+        topic: KafkaTopics::TASK_LIFECYCLE,
         data: {
           public_id: @task.public_id,
           title: @task.title,
@@ -43,9 +46,7 @@ class TasksController < ApplicationController
           performer_public_id: @task.account.public_id,
           status: @task.status
         }
-      }
-
-      WaterDrop::SyncProducer.call(add_event.to_json, topic: KafkaTopics::TASK_LIFECYCLE)
+      )
 
       # Buisiness event
       assing_event = {
